@@ -1,0 +1,5 @@
+2011-12-10  Manju Rajashekhar  <manj@twitter.com>
+
+    * twemperf: version 0.1.0 release
+      twemperf (aka mcperf) is a tool for measuring memcached server performance.
+
