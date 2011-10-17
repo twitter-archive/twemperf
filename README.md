@@ -125,6 +125,12 @@ request. All the set requests generated have a fixed item size of 1 byte.
     CPU time [s]: user 0.51 system 0.75 (user 40.0% system 59.0% total 99.0%)
     Net I/O: bytes 351.6 KB rate 277.2 KB/s (2.3*10^6 bps)
 
+## Issues and Support ##
+
+Have a bug or a question? Please create an issue here on GitHub!
+
+https://github.com/twitter/twemperf/issues
+
 ## Contributors ##
 
 * Manju Rajashekhar (@manju)
