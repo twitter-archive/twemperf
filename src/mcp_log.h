@@ -60,16 +60,17 @@ struct logger {
     }                                                                       \
 } while (0)
 
-#define log_hexdump(_level, _data, _datalen) do {                           \
+#define log_hexdump(_level, _data, _datalen, ...) do {                      \
     if (log_loggable(_level) != 0) {                                        \
-        _log_hexdump(__FILE__, __LINE__, (char *)(_data), (int)(_datalen)); \
+        _log_hexdump(__FILE__, __LINE__, (char *)(_data), (int)(_datalen),  \
+                     __VA_ARGS__);                                          \
     }                                                                       \
 } while (0)
 
 #else
 
 #define log_debug(_level, ...)
-#define log_hexdump(_level, _data, _datalen)
+#define log_hexdump(_level, _data, _datalen, ...)
 
 #endif
 
@@ -81,8 +82,9 @@ struct logger {
     _log(__FILE__, __LINE__, 0, __VA_ARGS__);                               \
 } while (0)
 
-#define loga_hexdump(_data, _datalen) do {                                  \
-    _log_hexdump(__FILE__, __LINE__, (char *)(_data), (int)(_datalen));     \
+#define loga_hexdump(_data, _datalen, ...) do {                             \
+    _log_hexdump(__FILE__, __LINE__, (char *)(_data), (int)(_datalen),      \
+                 __VA_ARGS__);                                              \
 } while (0)                                                                 \
 
 #define log_error(...) do {                                                 \
@@ -112,6 +114,6 @@ void log_reopen(void);
 int log_loggable(int level);
 void _log(const char *file, int line, int panic, const char *fmt, ...);
 void _log_stderr(const char *fmt, ...);
-void _log_hexdump(const char *file, int line, char *data, int datalen);
+void _log_hexdump(const char *file, int line, char *data, int datalen, const char *fmt, ...);
 
 #endif

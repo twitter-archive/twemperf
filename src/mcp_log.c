@@ -195,37 +195,36 @@ _log_stderr(const char *fmt, ...)
  * See -C option in man hexdump
  */
 void
-_log_hexdump(const char *file, int line, char *data, int datalen)
+_log_hexdump(const char *file, int line, char *data, int datalen,
+             const char *fmt, ...)
 {
     struct logger *l = &logger;
-    char buf[8 * LOG_MAX_LEN], *timestr;
+    char buf[8 * LOG_MAX_LEN];
     int i, off, len, size, errno_save;
-    struct tm *local;
-    time_t t;
+    va_list args;
     ssize_t n;
 
     if (l->fd < 0) {
         return;
     }
 
+    /* log format */
+    va_start(args, fmt);
+    _log(file, line, 0, fmt);
+    va_end(args);
+
+    /* log hexdump */
     errno_save = errno;
     off = 0;                  /* data offset */
     len = 0;                  /* length of output buffer */
     size = 8 * LOG_MAX_LEN;   /* size of output buffer */
-
-    t = time(NULL);
-    local = localtime(&t);
-    timestr = asctime(local);
-
-    len += mcp_scnprintf(buf + len, size - len, "[%.*s] %s:%d",
-                         strlen(timestr) - 1, timestr, file, line);
 
     while (datalen != 0 && (len < size - 1)) {
         char *save, *str;
         unsigned char c;
         int savelen;
 
-        len += mcp_scnprintf(buf + len, size - len, "\n%08x  ", off);
+        len += mcp_scnprintf(buf + len, size - len, "%08x  ", off);
 
         save = data;
         savelen = datalen;
@@ -249,12 +248,10 @@ _log_hexdump(const char *file, int line, char *data, int datalen)
             c = (unsigned char)(isprint(*data) ? *data : '.');
             len += mcp_scnprintf(buf + len, size - len, "%c", c);
         }
-        len += mcp_scnprintf(buf + len, size - len, "|");
+        len += mcp_scnprintf(buf + len, size - len, "|\n");
 
         off += 16;
     }
-
-    buf[len++] = '\n';
 
     n = mcp_write(l->fd, buf, len);
     if (n < 0) {
