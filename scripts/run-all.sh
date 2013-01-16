@@ -1,0 +1,22 @@
+#!/bin/sh
+
+mcperf=~/workspace/twemperf/src/mcperf
+
+server=localhost
+port=11211
+
+num_conns=10
+conn_rate=10000
+
+num_calls=1000
+call_rate=0
+
+n=100
+
+for i in `seq 1 ${n}`; do
+    for method in "set" "get" "gets" "delete" "add" "incr" "decr" "replace" "append" "prepend"; do
+        printf "[%d] command: %s =>\n" $i $method
+        ${mcperf} --server=${server} --port=${port} --num-conns=${num_conns} --conn-rate=${conn_rate} --num-calls=${num_calls} --call-rate=${call_rate} --method=${method}
+    done
+    sleep 2
+done
