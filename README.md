@@ -7,13 +7,13 @@ generating connections and requests at a high rate.
 
 ## Building mcperf ##
 
-To build mcperf from distribution tarball:
+To build mcperf from [distribution tarball](http://code.google.com/p/twemperf/downloads/list):
 
     $ ./configure
     $ make
     $ sudo make install
 
-To build mcperf from distribution tarball in _debug mode_:
+To build mcperf from [distribution tarball](http://code.google.com/p/twemperf/downloads/list) in _debug mode_:
 
     $ CFLAGS="-ggdb3 -O0" ./configure --enable-debug
     $ make
