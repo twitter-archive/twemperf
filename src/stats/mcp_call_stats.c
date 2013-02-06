@@ -91,7 +91,7 @@ call_recv_start(struct context *ctx, event_type_t type, void *rarg, void *carg)
     stats->req_rsp_min = MIN(req_rsp_time, stats->req_rsp_min);
     stats->req_rsp_max = MAX(req_rsp_time, stats->req_rsp_max);
 
-    bin = MIN(lrint(req_rsp_time / HIST_BIN_WIDTH), HIST_NUM_BINS);
+    bin = MIN(lrint(req_rsp_time / HIST_BIN_WIDTH), HIST_NUM_BINS - 1);
     stats->req_rsp_hist[bin]++;
 }
 
