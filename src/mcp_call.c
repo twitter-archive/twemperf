@@ -84,8 +84,8 @@ call_get(struct conn *conn)
 
     call->rsp.recv_start = 0.0;
     call->rsp.rcvd = 0;
-    call->rsp.rcurr = conn->buf1k;
-    call->rsp.rsize = sizeof(conn->buf1k);
+    call->rsp.rcurr = conn->buf;
+    call->rsp.rsize = sizeof(conn->buf);
     call->rsp.pcurr = call->rsp.rcurr;
     call->rsp.start = NULL;
     call->rsp.end = NULL;
@@ -735,8 +735,8 @@ call_parse_rsp_value(struct context *ctx, struct call *call)
      * We have parsed all the data in the read buffer. Reset the read
      * marker to make more space in the read buffer
      */
-    call->rsp.rcurr = conn->buf1k;
-    call->rsp.rsize = sizeof(conn->buf1k);
+    call->rsp.rcurr = conn->buf;
+    call->rsp.rsize = sizeof(conn->buf);
     call->rsp.pcurr = call->rsp.rcurr;
 
     return call->rsp.vlen == 0 ? MCP_OK : MCP_EAGAIN;
@@ -786,10 +786,10 @@ call_recv(struct context *ctx, struct call *call)
          * at the tail end to the head.
          */
         chunk_size = (size_t)(call->rsp.rcurr - call->rsp.pcurr);
-        mcp_memmove(conn->buf1k, call->rsp.pcurr, chunk_size);
-        call->rsp.pcurr = conn->buf1k;
-        call->rsp.rcurr = conn->buf1k + chunk_size;
-        call->rsp.rsize = sizeof(conn->buf1k) - chunk_size;
+        mcp_memmove(conn->buf, call->rsp.pcurr, chunk_size);
+        call->rsp.pcurr = conn->buf;
+        call->rsp.rcurr = conn->buf + chunk_size;
+        call->rsp.rsize = sizeof(conn->buf) - chunk_size;
     }
 
     if (call->rsp.rcvd == 0) {

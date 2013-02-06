@@ -36,7 +36,7 @@ struct conn {
 
     int                sd;                  /* socket descriptor */
 
-    char               buf1k[KB];           /* conn buffer */
+    char               buf[8 * KB];         /* conn buffer */
 
     struct gen         call_gen;            /* call generator */
     uint32_t           ncall_created;       /* # call created */
