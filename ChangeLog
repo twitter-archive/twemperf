@@ -1,3 +1,7 @@
+2013-06-02  Manju Rajashekhar  <manj@twitter.com>
+    * twemperf: version 0.1.1 release
+      fix off-by-one error
+
 2011-12-10  Manju Rajashekhar  <manj@twitter.com>
 
     * twemperf: version 0.1.0 release
