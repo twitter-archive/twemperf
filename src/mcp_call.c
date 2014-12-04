@@ -219,7 +219,7 @@ call_make_retrieval_req(struct context *ctx, struct call *call,
 
         case REQ_IOV_KEY:
             len = mcp_scnprintf(call->req.keyname, sizeof(call->req.keyname),
-                                "%.*s%08"PRIx32" ", opt->prefix.len,
+                                "%.*s%08"PRIx32, opt->prefix.len,
                                 opt->prefix.data, key_id);
             iov->iov_base = call->req.keyname;
             iov->iov_len = (size_t)len;
